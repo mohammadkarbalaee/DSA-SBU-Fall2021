@@ -20,6 +20,7 @@ public class First {
       numbers[i] = cin.nextInt();
     }
   }
+
   private static void selectionSort(){
     for (int i = 0; i < numbers.length - 1; i++) {
       int leastIndex = i;
