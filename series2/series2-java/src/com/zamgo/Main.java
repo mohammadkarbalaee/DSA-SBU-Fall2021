@@ -1,34 +1,36 @@
 package com.zamgo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
-    public static void main(String[] args) {
-        //declarations
-        Scanner console = new Scanner(System.in);
-        int n = console.nextInt();
-        int timeCounter = 0;
-        int inputNumber;
-        ArrayList<Integer> numbers = new ArrayList<>();
-        //getting the input numbers
-        for (int i = 0; i < n; i++) {
-            inputNumber = console.nextInt();
-            numbers.add(inputNumber);
+public class Main
+{
+    private static long[] numbers;
+    private static int n;
+
+    public static void main(String[] args)
+    {
+        Scanner cin = new Scanner(System.in);
+        n = cin.nextInt();
+        numbers = new long[n];
+        getArray(cin, n, numbers);
+        System.out.print(getPermutation());
+    }
+
+    private static void getArray(Scanner cin, int n, long[] numbers)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            numbers[i] = cin.nextInt();
         }
-        //main operations
-        int leastDifference;
-        int varyingDifference;
-        for (int i = 1; i <= n; i++) {
-            leastDifference = Math.abs(numbers.get(0) - i);
-            for (int j = 1; j < n; j++) {
-                varyingDifference = Math.abs(numbers.get(j) - i);
-                if(varyingDifference < leastDifference){
-                    leastDifference = varyingDifference;
-                }
-            }
-            timeCounter += leastDifference;
+    }
+    private static long getPermutation()
+    {
+        Arrays.sort(numbers);
+        long result = 0;
+        for (int i = 0; i < n; i++)
+        {
+            result += Math.abs(numbers[i] - (i + 1));
         }
-        System.out.println(timeCounter);
+        return result;
     }
 }
