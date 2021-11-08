@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b59394a5-2303-4d56-a634-1d8a99725525" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/zamgo/QuickSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +34,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Application.QuickSort">
     <configuration name="QuickSort" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -76,17 +76,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.QuickSort" />
@@ -105,7 +94,10 @@
       <updated>1636004144245</updated>
       <workItem from="1636004147064" duration="26035000" />
       <workItem from="1636094098137" duration="14590000" />
-      <workItem from="1636279596653" duration="2853000" />
+      <workItem from="1636279596653" duration="3651000" />
+      <workItem from="1636298511850" duration="7000" />
+      <workItem from="1636365370157" duration="25000" />
+      <workItem from="1636365417115" duration="87000" />
     </task>
     <servers />
   </component>

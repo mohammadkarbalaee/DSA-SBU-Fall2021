@@ -9,5 +9,4 @@ for (let i = 0; i < A.length - 1; i++) {
     }
     [A[i],A[leastIndex]] = [A[leastIndex],A[i]]
 }
-
 console.log(A);
