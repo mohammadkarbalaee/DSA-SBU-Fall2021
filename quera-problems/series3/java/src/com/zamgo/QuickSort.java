@@ -1,25 +1,36 @@
-package com.zamgo;
 
-import javafx.scene.transform.Scale;
-
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class QuickSort {
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int testsQuantity = in.nextInt();
-    int[][] testArrays = new int[testsQuantity][];
+    int[][] testArraysLomuto = new int[testsQuantity][];
+    int[][] testArraysHoare = new int[testsQuantity][];
     for (int i = 0; i < testsQuantity; i++) {
       int testArrayLength = in.nextInt();
       int[] testArray = new int[testArrayLength];
       for (int j = 0; j < testArrayLength; j++) {
         testArray[j] = in.nextInt();
       }
-      testArrays[i] = testArray;
+      testArraysLomuto[i] = testArray;
+      testArraysHoare[i] = testArray;
     }
+    for (int i = 0; i < testsQuantity; i++) {
+      System.out.println(chooseEfficient(testArraysLomuto[i],testArraysHoare[i]));
+    }
+  }
 
-    System.out.println(Arrays.deepToString(testArrays));
+  public static String chooseEfficient(int[] lomutoTestCase,int[] hoareTestCase){
+    int lomutoCount = lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1);
+    int hoareCount = hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1);
+    if (lomutoCount > hoareCount){
+      return "HR";
+    } else if(hoareCount > lomutoCount){
+      return "LMT";
+    } else {
+      return "TIE";
+    }
   }
 
   public static int hoarePartition(int[] array, int startIndex, int endIndex){
@@ -58,7 +69,7 @@ public class QuickSort {
   }
 
   public static int lomutoQuickSort(int[] array,int startIndex, int endIndex){
-    int count = 0;
+    int count = 1;
     if (startIndex < endIndex){
       int previousPivotIndex = lomutoPartition(array,startIndex,endIndex);
       count += lomutoPartition(array,startIndex,previousPivotIndex);
@@ -70,7 +81,7 @@ public class QuickSort {
   }
 
   public static int hoareQuickSort(int[] array,int startIndex, int endIndex){
-    int count = 0;
+    int count = 1;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
       count += lomutoPartition(array,startIndex,previousPivotIndex);
