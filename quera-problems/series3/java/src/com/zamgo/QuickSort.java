@@ -2,7 +2,10 @@ package com.zamgo;
 
 public class QuickSort {
   public static void main(String[] args) {
-
+    int[] array1 = {1,1,4,-10,25};
+    int[] array2 = {1,1,4,-10,25};
+    System.out.println(hoareQuickSort(array1,0,array1.length - 1));
+    System.out.println(lomutoQuickSort(array2,0,array2.length - 1));
   }
 
   public static int hoarePartition(int[] array, int startIndex, int endIndex){
@@ -40,20 +43,28 @@ public class QuickSort {
     return startOfLeftHalf + 1;
   }
 
-  public static void lomutoQuickSort(int[] array,int startIndex, int endIndex){
+  public static int lomutoQuickSort(int[] array,int startIndex, int endIndex){
+    int count = 0;
     if (startIndex < endIndex){
       int previousPivotIndex = lomutoPartition(array,startIndex,endIndex);
-      lomutoPartition(array,startIndex,previousPivotIndex - 1);
-      lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count += lomutoPartition(array,startIndex,previousPivotIndex);
+      count++;
+      count += lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count++;
     }
+    return count;
   }
 
-  public static void HoareQuickSort(int[] array,int startIndex, int endIndex){
+  public static int hoareQuickSort(int[] array,int startIndex, int endIndex){
+    int count = 0;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
-      lomutoPartition(array,startIndex,previousPivotIndex - 1);
-      lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count += lomutoPartition(array,startIndex,previousPivotIndex);
+      count++;
+      count += lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count++;
     }
+    return count;
   }
 
   private static void swap(int[] array,int i,int j){
