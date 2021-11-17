@@ -1,11 +1,25 @@
 package com.zamgo;
 
+import javafx.scene.transform.Scale;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class QuickSort {
   public static void main(String[] args) {
-    int[] array1 = {1,1,4,-10,25};
-    int[] array2 = {1,1,4,-10,25};
-    System.out.println(hoareQuickSort(array1,0,array1.length - 1));
-    System.out.println(lomutoQuickSort(array2,0,array2.length - 1));
+    Scanner in = new Scanner(System.in);
+    int testsQuantity = in.nextInt();
+    int[][] testArrays = new int[testsQuantity][];
+    for (int i = 0; i < testsQuantity; i++) {
+      int testArrayLength = in.nextInt();
+      int[] testArray = new int[testArrayLength];
+      for (int j = 0; j < testArrayLength; j++) {
+        testArray[j] = in.nextInt();
+      }
+      testArrays[i] = testArray;
+    }
+
+    System.out.println(Arrays.deepToString(testArrays));
   }
 
   public static int hoarePartition(int[] array, int startIndex, int endIndex){
