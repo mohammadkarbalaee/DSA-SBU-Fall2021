@@ -11,12 +11,15 @@ public class QuickSort {
     int[][] testArraysHoare = new int[testsQuantity][];
     for (int i = 0; i < testsQuantity; i++) {
       int testArrayLength = in.nextInt();
-      int[] testArray = new int[testArrayLength];
+      int[] testArrayLomuto = new int[testArrayLength];
+      int[] testArrayHoare = new int[testArrayLength];
       for (int j = 0; j < testArrayLength; j++) {
-        testArray[j] = in.nextInt();
+        int input = in.nextInt();
+        testArrayLomuto[j] = input;
+        testArrayHoare[j] = input;
       }
-      testArraysLomuto[i] = testArray;
-      testArraysHoare[i] = testArray;
+      testArraysLomuto[i] = testArrayLomuto;
+      testArraysHoare[i] = testArrayHoare;
     }
     for (int i = 0; i < testsQuantity; i++) {
       System.out.println(chooseEfficient(testArraysLomuto[i],testArraysHoare[i]));
@@ -43,18 +46,21 @@ public class QuickSort {
     int j = endIndex + 1;
 
     while (true) {
-      do {
-        j--;
-      } while (array[j] > pivot);
 
       do {
         i++;
-      } while (array[i] < pivot);
+      }
+      while (array[i] < pivot);
 
-      if (i < j) {
-        swap(array,i,j);
-      } else {
+      do {
+        j--;
+      }
+      while (array[j] > pivot);
+
+      if (i >= j) {
         return j;
+      } else {
+        swap(array,i,j);
       }
     }
   }
@@ -86,8 +92,8 @@ public class QuickSort {
     count++;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
-      count += lomutoPartition(array,startIndex,previousPivotIndex - 1);
-      count += lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count += hoarePartition(array,startIndex,previousPivotIndex);
+      count += hoarePartition(array,previousPivotIndex + 1,endIndex);
     }
     return count;
   }
