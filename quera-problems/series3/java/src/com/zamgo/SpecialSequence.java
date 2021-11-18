@@ -7,32 +7,35 @@ public class SpecialSequence {
     Scanner in = new Scanner(System.in);
     int arrayLength = in.nextInt();
     int specialSubsequenceLength = in.nextInt();
-    int[] array = new int[arrayLength];
-    int degree = 0;
+    long[] array = new long[arrayLength];
+    long degree = 0;
     for (int i = 0; i < arrayLength; i++) {
       array[i] = in.nextInt();
     }
     for (int i = 0; i < arrayLength - specialSubsequenceLength; i++) {
-      for (int j = i + 1; j < arrayLength; j++) {
-        boolean biggerFound = false;
+      for (int j = i; j < arrayLength; j++){
+        int biggerCounter = 0;
         if (array[j] > array[i]){
-          int basesFound = 1;
-          int newBase = array[j];
-          for (int k = j + 1; k < arrayLength; k++) {
-            if (array[k] > newBase){
-              newBase = array[k];
-              basesFound++;
-              if (basesFound == specialSubsequenceLength){
-                biggerFound = true;
+          biggerCounter++;
+          if (biggerCounter == specialSubsequenceLength){
+            degree += array[i];
+            break;
+          } else {
+            for (int k = j + 1; k < arrayLength; k++) {
+              if (array[k] > array[i]){
+                biggerCounter++;
+                if (biggerCounter == specialSubsequenceLength){
+                  degree += array[i];
+                  break;
+                }
+              } else {
                 break;
               }
-            } else {
-              break;
             }
           }
         }
-        if (biggerFound){
-          degree += array[i];
+        if (biggerCounter == specialSubsequenceLength){
+          break;
         }
       }
     }
