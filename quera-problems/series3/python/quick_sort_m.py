@@ -1,7 +1,3 @@
-hoare_counts = []
-lomuto_counts = []
-
-
 def lomuto_partition(arr, low, high):
     # pivot
     pivot = arr[high]
@@ -40,26 +36,32 @@ def hoare_partition(arr, low, high):
             j -= 1
 
         # If two pointers met.
-        if (i >= j):
+        if (i < j):
+            arr[i], arr[j] = arr[j], arr[i]
+        else:
             return j
 
-        arr[i], arr[j] = arr[j], arr[i]
+
+hoare_counts = 0
+lomuto_counts = 0
 
 
-def hoare_quick_sort(array, start, end, count_index):
-    hoare_counts[count_index] += 1
+def hoare_quick_sort(array, start, end):
+    global hoare_counts
+    hoare_counts = hoare_counts + 1
     if (start < end):
         p = hoare_partition(array, start, end)
-        hoare_quick_sort(array, start, p - 1, count_index)
-        hoare_quick_sort(array, p + 1, end, count_index)
+        hoare_quick_sort(array, start, p - 1)
+        hoare_quick_sort(array, p + 1, end)
 
 
-def lomuto_quick_sort(array, start, end, count_index):
-    lomuto_counts[count_index] += 1
+def lomuto_quick_sort(array, start, end):
+    global lomuto_counts
+    lomuto_counts = lomuto_counts + 1
     if (start < end):
         p = lomuto_partition(array, start, end)
-        lomuto_quick_sort(array, start, p - 1, count_index)
-        lomuto_quick_sort(array, p + 1, end, count_index)
+        lomuto_quick_sort(array, start, p - 1)
+        lomuto_quick_sort(array, p + 1, end)
 
 
 test_arrays_lomuto = []
@@ -73,22 +75,22 @@ for i in range(0, tests_quantity):
         input_value = int(input())
         test_array_lomuto.append(input_value)
         test_array_hoare.append(input_value)
-    lomuto_counts.append(0)
-    hoare_counts.append(0)
     test_arrays_lomuto.append(test_array_lomuto)
     test_arrays_hoare.append(test_array_hoare)
 
 
-def choose_efficient(lomuto_test, hoare_test, count_index):
-    lomuto_quick_sort(lomuto_test, 0, len(lomuto_test) - 1, count_index)
-    hoare_quick_sort(hoare_test, 0, len(hoare_test) - 1, count_index)
-    if lomuto_counts[count_index] > hoare_counts[count_index]:
+def choose_efficient(lomuto_test, hoare_test):
+    lomuto_quick_sort(lomuto_test, 0, len(lomuto_test) - 1)
+    hoare_quick_sort(hoare_test, 0, len(hoare_test) - 1)
+    if lomuto_counts > hoare_counts:
         return "HR"
-    elif lomuto_counts[count_index] < hoare_counts[count_index]:
+    elif lomuto_counts < hoare_counts:
         return "LMT"
     else:
         return "TIE"
 
 
 for i in range(0, tests_quantity):
-    print(choose_efficient(test_arrays_lomuto[i], test_arrays_hoare[i], i))
+    lomuto_counts = 0
+    hoare_counts = 0
+    print(choose_efficient(test_arrays_lomuto[i], test_arrays_hoare[i]))
