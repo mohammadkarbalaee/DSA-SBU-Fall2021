@@ -1,10 +1,9 @@
-array_length = int(input())
-special_length = int(input())
-array = []
+array = list(map(int, input().split()))
+array_length = array[0]
+special_length = array[1]
+array.pop(0)
+array.pop(0)
 degree = 0
-for i in range(0, array_length):
-    temp = int(input())
-    array.append(temp)
 for i in range(0, array_length - special_length):
     is_found = False
     for j in range(i,array_length):
