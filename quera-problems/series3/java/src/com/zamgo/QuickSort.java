@@ -1,43 +1,50 @@
-
 import java.util.Scanner;
 
 public class QuickSort {
+
+  public static int[] hoareCounts;
+  public static int[] lomutoCounts;
+
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int testsQuantity = in.nextInt();
-    int[][] testArraysLomuto = new int[testsQuantity][];
-    int[][] testArraysHoare = new int[testsQuantity][];
-    for (int i = 0; i < testsQuantity; i++) {
+    long[][] testArraysLomuto = new long[testsQuantity][];
+    long[][] testArraysHoare = new long[testsQuantity][];
+    hoareCounts = new int[testsQuantity];
+    lomutoCounts = new int[testsQuantity];
+    for (int i = 0; i < testsQuantity; i++){
       int testArrayLength = in.nextInt();
-      int[] testArrayLomuto = new int[testArrayLength];
-      int[] testArrayHoare = new int[testArrayLength];
+      long[] testArrayLomuto = new long[testArrayLength];
+      long[] testArrayHoare = new long[testArrayLength];
       for (int j = 0; j < testArrayLength; j++) {
         int input = in.nextInt();
         testArrayLomuto[j] = input;
         testArrayHoare[j] = input;
+        lomutoCounts[i] = 0;
+        hoareCounts[i] = 0;
       }
       testArraysLomuto[i] = testArrayLomuto;
       testArraysHoare[i] = testArrayHoare;
     }
-    for (int i = 0; i < testsQuantity; i++) {
-      System.out.println(chooseEfficient(testArraysLomuto[i],testArraysHoare[i]));
+    for (int i = 0; i < testsQuantity; i++){
+      System.out.println(chooseEfficient(testArraysLomuto[i],testArraysHoare[i],i));
     }
   }
 
-  public static String chooseEfficient(int[] lomutoTestCase,int[] hoareTestCase){
-    int lomutoCount = lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1,0);
-    int hoareCount = hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1,0);
-    if (lomutoCount > hoareCount){
+  public static String chooseEfficient(long[] lomutoTestCase,long[] hoareTestCase,int countIndex){
+    lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1,0);
+    hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1,0);
+    if (lomutoCounts[countIndex] > hoareCounts[countIndex]){
       return "HR";
-    } else if(hoareCount > lomutoCount){
+    } else if(hoareCounts[countIndex] > lomutoCounts[countIndex]){
       return "LMT";
     } else {
       return "TIE";
     }
   }
 
-  public static int hoarePartition(int[] array, int startIndex, int endIndex){
-    int pivot = array[startIndex];
+  public static int hoarePartition(long[] array, int startIndex, int endIndex){
+    long pivot = array[startIndex];
     int i = startIndex - 1;
     int j = endIndex + 1;
 
@@ -61,8 +68,8 @@ public class QuickSort {
     }
   }
 
-  public static int lomutoPartition(int[] array,int startIndex, int endIndex){
-    int pivot = array[endIndex];
+  public static int lomutoPartition(long[] array,int startIndex, int endIndex){
+    long pivot = array[endIndex];
     int startOfLeftHalf = startIndex - 1;
     for (int startOfRightHalf = startIndex; startOfRightHalf < endIndex; startOfRightHalf++) {
       if (array[startOfRightHalf] <= pivot){
@@ -74,28 +81,26 @@ public class QuickSort {
     return startOfLeftHalf + 1;
   }
 
-  public static int lomutoQuickSort(int[] array,int startIndex, int endIndex,int count){
-    count++;
+  public static void lomutoQuickSort(long[] array,int startIndex, int endIndex,int countIndex){
+    lomutoCounts[countIndex]++;
     if (startIndex < endIndex){
       int previousPivotIndex = lomutoPartition(array,startIndex,endIndex);
-      count += lomutoQuickSort(array,startIndex,previousPivotIndex - 1,count);
-      count += lomutoQuickSort(array,previousPivotIndex + 1,endIndex,count);
+      lomutoQuickSort(array,startIndex,previousPivotIndex - 1,countIndex);
+      lomutoQuickSort(array,previousPivotIndex + 1,endIndex,countIndex);
     }
-    return count;
   }
 
-  public static int hoareQuickSort(int[] array,int startIndex, int endIndex,int count){
-    count++;
+  public static void hoareQuickSort(long[] array,int startIndex, int endIndex,int countIndex){
+    hoareCounts[countIndex]++;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
-      count += hoareQuickSort(array,startIndex,previousPivotIndex - 1,count);
-      count += hoareQuickSort(array,previousPivotIndex + 1,endIndex,count);
+      hoareQuickSort(array,startIndex,previousPivotIndex - 1,countIndex);
+      hoareQuickSort(array,previousPivotIndex + 1,endIndex,countIndex);
     }
-    return count;
   }
 
-  private static void swap(int[] array,int i,int j){
-    int temp = array[i];
+  private static void swap(long[] array,int i,int j){
+    long temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
