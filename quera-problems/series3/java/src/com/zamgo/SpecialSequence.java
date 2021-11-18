@@ -1,5 +1,3 @@
-package com.zamgo;
-
 import java.util.Scanner;
 
 public class SpecialSequence {
@@ -13,32 +11,66 @@ public class SpecialSequence {
       array[i] = in.nextInt();
     }
     for (int i = 0; i < arrayLength - specialSubsequenceLength; i++) {
+      boolean isFound = false;
       for (int j = i; j < arrayLength; j++){
         int biggerCounter = 0;
         if (array[j] > array[i]){
           biggerCounter++;
-          if (biggerCounter == specialSubsequenceLength){
-            degree += array[i];
-            break;
-          } else {
-            for (int k = j + 1; k < arrayLength; k++) {
-              if (array[k] > array[i]){
-                biggerCounter++;
-                if (biggerCounter == specialSubsequenceLength){
+          for (int k = j + 1; k < arrayLength; k++) {
+            if (array[k] > array[i]){
+              biggerCounter++;
+              if (biggerCounter == specialSubsequenceLength){
+                if(k == arrayLength - 1){
                   degree += array[i];
                   break;
+                } else {
+                  if (array[k + 1] <= array[i]){
+                    degree += array[i];
+                    break;
+                  }
                 }
-              } else {
-                break;
               }
+            } else {
+              break;
             }
           }
         }
         if (biggerCounter == specialSubsequenceLength){
+          isFound = true;
           break;
         }
       }
-    }
+
+      if (!isFound){
+          for (int j = i; j > 0; j--){
+            int biggerCounter = 0;
+            if (array[j] > array[i]){
+              biggerCounter++;
+              for (int k = j - 1; k >= 0; k--) {
+                if (array[k] > array[i]){
+                  biggerCounter++;
+                  if (biggerCounter == specialSubsequenceLength){
+                    if(k == 0){
+                      degree += array[i];
+                      break;
+                    } else {
+                      if (array[k - 1] <= array[i]){
+                        degree += array[i];
+                        break;
+                      }
+                    }
+                  }
+                } else {
+                  break;
+                }
+              }
+            }
+            if (biggerCounter == specialSubsequenceLength){
+              break;
+            }
+          }
+        }
+      }
     System.out.println(degree);
   }
 }
