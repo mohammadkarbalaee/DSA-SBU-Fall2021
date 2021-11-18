@@ -1,4 +1,3 @@
-package com.zamgo;
 
 import java.util.Scanner;
 
