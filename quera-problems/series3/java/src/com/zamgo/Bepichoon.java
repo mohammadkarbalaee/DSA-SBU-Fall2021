@@ -3,35 +3,57 @@ package com.zamgo;
 import java.util.Scanner;
 
 public class Bepichoon {
+
+    public static char[] nuts;
+    public static char[] bolts;
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int nutsBoltsQuantity = in.nextInt();
-        char[] nutsBolts = new char[2 * nutsBoltsQuantity];
-        for (int i = 0; i < 2 * nutsBoltsQuantity; i++) {
-            nutsBolts[i] = in.next().charAt(0);
+        char[] nuts = new char[nutsBoltsQuantity];
+        char[] bolts = new char[nutsBoltsQuantity];
+
+        for (int i = 0; i < nutsBoltsQuantity; i++) {
+            nuts[i] = in.next().charAt(0);
         }
 
-        int sortedToIndex = 1;
-        for (int i = nutsBoltsQuantity; i < 2 * nutsBoltsQuantity; i++) {
-            for (int j = 0; j < nutsBoltsQuantity; j++) {
-                char key = nutsBolts[i];
-                int beforeProperIndex = sortedToIndex - 1;
-                while (beforeProperIndex > 0 && nutsBolts[beforeProperIndex] > key){
-                    nutsBolts[beforeProperIndex + 1] = nutsBolts[beforeProperIndex];
-                    beforeProperIndex--;
-                }
-                nutsBolts[beforeProperIndex + 1] = key;
-                sortedToIndex++;
-            }
+        for (int i = 0; i < nutsBoltsQuantity; i++) {
+           bolts[i] = in.next().charAt(0);
         }
 
-        for (int i = 0; i < 2 * nutsBoltsQuantity; i += 2) {
-            System.out.print(nutsBolts[i] + " ");
+
+        for (int i = 0; i < nutsBoltsQuantity; i += 2) {
+            System.out.print(nuts[i] + " ");
         }
         System.out.println();
-        for (int i = 1; i < 2 * nutsBoltsQuantity; i += 2) {
-            System.out.print(nutsBolts[i] + " ");
+        for (int i = 1; i < nutsBoltsQuantity; i += 2) {
+            System.out.print(bolts[i] + " ");
         }
+    }
+
+    public static void quickSort(int startIndex, int endIndex){
+        if (startIndex < endIndex){
+            int previousPivotIndex = partition(array,startIndex,endIndex);
+            quickSort(array,startIndex,previousPivotIndex - 1);
+            quickSort(array,previousPivotIndex + 1,endIndex);
+        }
+    }
+
+    public static int partition(int startIndex, int endIndex,char pivot){
+        int startOfLeftHalf = startIndex - 1;
+        for (int startOfRightHalf = startIndex; startOfRightHalf < endIndex; startOfRightHalf++) {
+            if (array[startOfRightHalf] <= pivot){
+                startOfLeftHalf++;
+                swap(array,startOfLeftHalf,startOfRightHalf);
+            }
+        }
+        return startOfLeftHalf + 1;
+    }
+
+    private static void swap(char[] array,int i,int j){
+        char temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 }
 
