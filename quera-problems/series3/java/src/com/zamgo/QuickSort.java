@@ -1,6 +1,4 @@
-package com.zamgo;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class QuickSort {
@@ -23,8 +21,6 @@ public class QuickSort {
     }
     for (int i = 0; i < testsQuantity; i++) {
       System.out.println(chooseEfficient(testArraysLomuto[i],testArraysHoare[i]));
-      System.out.println(Arrays.toString(testArraysLomuto[i]));
-      System.out.println(Arrays.toString(testArraysHoare[i]));
     }
   }
 
@@ -68,7 +64,7 @@ public class QuickSort {
   public static int lomutoPartition(int[] array,int startIndex, int endIndex){
     int pivot = array[endIndex];
     int startOfLeftHalf = startIndex - 1;
-    for (int startOfRightHalf = startIndex; startOfRightHalf < endIndex - 1; startOfRightHalf++) {
+    for (int startOfRightHalf = startIndex; startOfRightHalf < endIndex; startOfRightHalf++) {
       if (array[startOfRightHalf] <= pivot){
         startOfLeftHalf++;
         swap(array,startOfLeftHalf,startOfRightHalf);
@@ -82,8 +78,8 @@ public class QuickSort {
     count++;
     if (startIndex < endIndex){
       int previousPivotIndex = lomutoPartition(array,startIndex,endIndex);
-      count += lomutoPartition(array,startIndex,previousPivotIndex - 1);
-      count += lomutoPartition(array,previousPivotIndex + 1,endIndex);
+      count += lomutoQuickSort(array,startIndex,previousPivotIndex - 1,count);
+      count += lomutoQuickSort(array,previousPivotIndex + 1,endIndex,count);
     }
     return count;
   }
@@ -92,8 +88,8 @@ public class QuickSort {
     count++;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
-      count += hoarePartition(array,startIndex,previousPivotIndex);
-      count += hoarePartition(array,previousPivotIndex + 1,endIndex);
+      count += hoareQuickSort(array,startIndex,previousPivotIndex - 1,count);
+      count += hoareQuickSort(array,previousPivotIndex + 1,endIndex,count);
     }
     return count;
   }
