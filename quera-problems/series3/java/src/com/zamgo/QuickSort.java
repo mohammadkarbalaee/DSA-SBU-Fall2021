@@ -1,17 +1,19 @@
+package com.zamgo;
+
 import java.util.Scanner;
 
 public class QuickSort {
 
-  public static int[] hoareCounts;
-  public static int[] lomutoCounts;
+  public static long[] hoareCounts;
+  public static long[] lomutoCounts;
 
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int testsQuantity = in.nextInt();
     long[][] testArraysLomuto = new long[testsQuantity][];
     long[][] testArraysHoare = new long[testsQuantity][];
-    hoareCounts = new int[testsQuantity];
-    lomutoCounts = new int[testsQuantity];
+    hoareCounts = new long[testsQuantity];
+    lomutoCounts = new long[testsQuantity];
     for (int i = 0; i < testsQuantity; i++){
       int testArrayLength = in.nextInt();
       long[] testArrayLomuto = new long[testArrayLength];
@@ -20,9 +22,9 @@ public class QuickSort {
         int input = in.nextInt();
         testArrayLomuto[j] = input;
         testArrayHoare[j] = input;
-        lomutoCounts[i] = 0;
-        hoareCounts[i] = 0;
       }
+      lomutoCounts[i] = 0;
+      hoareCounts[i] = 0;
       testArraysLomuto[i] = testArrayLomuto;
       testArraysHoare[i] = testArrayHoare;
     }
@@ -32,8 +34,10 @@ public class QuickSort {
   }
 
   public static String chooseEfficient(long[] lomutoTestCase,long[] hoareTestCase,int countIndex){
-    lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1,0);
-    hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1,0);
+    lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1,countIndex);
+    hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1,countIndex);
+//    System.out.println(lomutoCounts[countIndex]);
+//    System.out.println(hoareCounts[countIndex]);
     if (lomutoCounts[countIndex] > hoareCounts[countIndex]){
       return "HR";
     } else if(hoareCounts[countIndex] > lomutoCounts[countIndex]){
