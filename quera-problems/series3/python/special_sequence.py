@@ -1,12 +1,11 @@
+array_initial = list(map(int, input().split()))
 array = list(map(int, input().split()))
-array_length = array[0]
-special_length = array[1]
-array.pop(0)
-array.pop(0)
+array_length = array_initial[0]
+special_length = array_initial[1]
 degree = 0
 for i in range(0, array_length - special_length):
     is_found = False
-    for j in range(i,array_length):
+    for j in range(i, array_length):
         bigger_counter = 0
         if array[j] > array[i]:
             bigger_counter += 1
