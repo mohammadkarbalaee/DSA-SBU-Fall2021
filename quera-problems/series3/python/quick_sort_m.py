@@ -1,15 +1,10 @@
-def lomuto_partition(arr, low, high):
-    # pivot
-    pivot = arr[high]
+hoare_counts = lomuto_counts = 0
 
-    # Index of smaller element
+def lomuto_partition(arr, low, high):
+    pivot = arr[high]
     i = (low - 1)
     for j in range(low, high):
-
-        # If current element is smaller than or
-        # equal to pivot
         if (arr[j] <= pivot):
-            # increment index of smaller element
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
@@ -22,42 +17,30 @@ def hoare_partition(arr, low, high):
     j = high + 1
 
     while (True):
-
-        # Find leftmost element greater than
-        # or equal to pivot
         i += 1
         while (arr[i] < pivot):
             i += 1
-
-        # Find rightmost element smaller than
-        # or equal to pivot
         j -= 1
         while (arr[j] > pivot):
             j -= 1
-
-        # If two pointers met.
         if (i < j):
             arr[i], arr[j] = arr[j], arr[i]
         else:
             return j
 
 
-hoare_counts = 0
-lomuto_counts = 0
-
-
 def hoare_quick_sort(array, start, end):
     global hoare_counts
-    hoare_counts = hoare_counts + 1
+    hoare_counts += 1
     if (start < end):
         p = hoare_partition(array, start, end)
-        hoare_quick_sort(array, start, p - 1)
+        hoare_quick_sort(array, start, p)
         hoare_quick_sort(array, p + 1, end)
 
 
 def lomuto_quick_sort(array, start, end):
     global lomuto_counts
-    lomuto_counts = lomuto_counts + 1
+    lomuto_counts += 1
     if (start < end):
         p = lomuto_partition(array, start, end)
         lomuto_quick_sort(array, start, p - 1)

@@ -19,7 +19,7 @@ public class QuickSort {
       long[] testArrayLomuto = new long[testArrayLength];
       long[] testArrayHoare = new long[testArrayLength];
       for (int j = 0; j < testArrayLength; j++) {
-        int input = in.nextInt();
+        long input = in.nextLong();
         testArrayLomuto[j] = input;
         testArrayHoare[j] = input;
       }
@@ -36,8 +36,6 @@ public class QuickSort {
   public static String chooseEfficient(long[] lomutoTestCase,long[] hoareTestCase,int countIndex){
     lomutoQuickSort(lomutoTestCase,0,lomutoTestCase.length - 1,countIndex);
     hoareQuickSort(hoareTestCase,0,hoareTestCase.length - 1,countIndex);
-//    System.out.println(lomutoCounts[countIndex]);
-//    System.out.println(hoareCounts[countIndex]);
     if (lomutoCounts[countIndex] > hoareCounts[countIndex]){
       return "HR";
     } else if(hoareCounts[countIndex] > lomutoCounts[countIndex]){
@@ -98,7 +96,7 @@ public class QuickSort {
     hoareCounts[countIndex]++;
     if (startIndex < endIndex){
       int previousPivotIndex = hoarePartition(array,startIndex,endIndex);
-      hoareQuickSort(array,startIndex,previousPivotIndex - 1,countIndex);
+      hoareQuickSort(array,startIndex,previousPivotIndex,countIndex);
       hoareQuickSort(array,previousPivotIndex + 1,endIndex,countIndex);
     }
   }
