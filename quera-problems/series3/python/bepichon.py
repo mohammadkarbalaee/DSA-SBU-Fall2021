@@ -1,48 +1,30 @@
-def partition(array, begin, end):
-    pivot_idx = begin
-    for i in range(begin + 1, end + 1):
-        if array[i] <= array[begin]:
-            pivot_idx += 1
-            array[i], array[pivot_idx] = array[pivot_idx], array[i]
-    array[pivot_idx], array[begin] = array[begin], array[pivot_idx]
-    return pivot_idx
+def partition(start, end, array):
+    pivot_index = start
+    pivot = array[pivot_index]
+    while start < end:
+        while start < len(array) and array[start] <= pivot:
+            start += 1
+        while array[end] > pivot:
+            end -= 1
+        if (start < end):
+            array[start], array[end] = array[end], array[start]
+    array[end], array[pivot_index] = array[pivot_index], array[end]
+    return end
 
 
-def quick_sort_recursion(array, begin, end):
-    if begin >= end:
-        return
-    pivot_idx = partition(array, begin, end)
-    quick_sort_recursion(array, begin, pivot_idx - 1)
-    quick_sort_recursion(array, pivot_idx + 1, end)
+def quick_sort(start, end, array1, array2):
+    if (start < end):
+        p = partition(start, end, array2)
+        quick_sort(start, p - 1, array1, array2)
+        quick_sort(p + 1, end, array1, array2)
 
-
-def quick_sort(array, begin=0, end=None):
-    if end is None:
-        end = len(array) - 1
-
-
-    return quick_sort_recursion(array, begin, end)
-
-
-screw_ascii_arr = []
-screw_char_arr = []
-vertebrae_ascii_arr = []
-vertebrae_char_arr = []
 
 n = int(input())
-for i in range(0, n):
-    char_screw = input()
-    screw_char_arr.append(char_screw)
+screw_char_arr = (input()).split()
+vertebrae_char_arr = (input()).split()
 
-    ascii_screw = ord(char_screw)
-    screw_ascii_arr.append(ascii_screw)
 
-for i in range(0, n):
-    char_vertebrae = input()
-    vertebrae_char_arr.append(char_vertebrae)
-
-    ascii_vertebrae = ord(char_vertebrae)
-    vertebrae_ascii_arr.append(ascii_vertebrae)
-
-quick_sort(screw_char_arr, 0, n-1)
-print(screw_char_arr)
+quick_sort(0, n - 1, screw_char_arr, vertebrae_char_arr)
+quick_sort(0, n - 1, vertebrae_char_arr, screw_char_arr)
+print(*screw_char_arr, sep = " ")
+print(*vertebrae_char_arr, sep = " ")
