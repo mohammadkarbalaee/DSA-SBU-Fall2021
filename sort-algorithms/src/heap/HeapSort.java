@@ -2,12 +2,14 @@ package heap;
 
 import java.util.Arrays;
 
-public class HeapFunctions {
+public class HeapSort {
 
   private static int[] array = {0,1,2,3,4,7,8,9,10,14,16};
+  private static int heapSize;
 
   public static void main(String[] args) {
-    buildMaxHeap();
+    heapSize = array.length - 1;
+    heapSort();
     System.out.println(Arrays.toString(array));
   }
 
@@ -16,11 +18,11 @@ public class HeapFunctions {
     int right = right(brokenIndex);
     int indexOfLargest = brokenIndex;
 
-    if(left < array.length && array[left] > array[indexOfLargest]){
+    if(left <= heapSize && array[left] > array[indexOfLargest]){
       indexOfLargest = left;
     }
 
-    if(right < array.length && array[right] > array[indexOfLargest]){
+    if(right <= heapSize && array[right] > array[indexOfLargest]){
       indexOfLargest = right;
     }
 
@@ -51,6 +53,15 @@ public class HeapFunctions {
   public static void buildMaxHeap(){
     for (int i = (int) Math.floor((array.length - 1) / 2.0); i > 0; i--) {
       maxHeapify(i);
+    }
+  }
+
+  public static void heapSort(){
+    buildMaxHeap();
+    for (int i = array.length - 1; i > 1; i--) {
+      swap(1,i);
+      heapSize--;
+      maxHeapify(1);
     }
   }
 }
