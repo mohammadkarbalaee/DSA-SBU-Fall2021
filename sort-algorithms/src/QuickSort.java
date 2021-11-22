@@ -1,5 +1,3 @@
-package com.zamgo;
-
 import java.util.Arrays;
 
 public class QuickSort {
