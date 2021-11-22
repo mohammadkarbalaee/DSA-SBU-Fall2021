@@ -2,27 +2,25 @@ package heap;
 
 import java.util.Arrays;
 
-public class MaxHeapify {
+public class HeapFunctions {
 
-  private static int[] array = {0,16,14,10,8,7,9,3,2,4,1};
-  private static Heap heap = new Heap(array);
+  private static int[] array = {0,1,2,3,4,7,8,9,10,14,16};
 
   public static void main(String[] args) {
-    maxHeapify(3);
-    System.out.println(Arrays.toString(heap.getHeap()));
+    buildMaxHeap();
+    System.out.println(Arrays.toString(array));
   }
 
   private static void maxHeapify(int brokenIndex){
-    int left = left(brokenIndex);
+    int left =left(brokenIndex);
     int right = right(brokenIndex);
-    int indexOfLargest;
-    if(left <= heap.getHeapSize() && heap.heap[left] > heap.heap[brokenIndex]){
+    int indexOfLargest = brokenIndex;
+
+    if(left < array.length && array[left] > array[indexOfLargest]){
       indexOfLargest = left;
-    } else {
-      indexOfLargest = brokenIndex;
     }
 
-    if(right<= heap.getHeapSize() && heap.heap[right] > heap.heap[brokenIndex]){
+    if(right < array.length && array[right] > array[indexOfLargest]){
       indexOfLargest = right;
     }
 
@@ -41,12 +39,18 @@ public class MaxHeapify {
   }
 
   private static int right(int index){
-    return  2 * index + 1;
+    return  (2 * index) + 1;
   }
 
   private static void swap(int i,int j){
-    int temp = heap.heap[i];
-    heap.heap[i] = heap.heap[j];
-    heap.heap[j] = temp;
+    int temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+
+  public static void buildMaxHeap(){
+    for (int i = (int) Math.floor((array.length - 1) / 2.0); i > 0; i--) {
+      maxHeapify(i);
+    }
   }
 }

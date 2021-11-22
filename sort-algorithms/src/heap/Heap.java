@@ -1,17 +1,11 @@
 package heap;
 
 public class Heap {
-  public int[] heap;
+  public int[] array;
+  public int heapSize;
 
   Heap(int[] heap){
-    this.heap = heap;
-  }
-
-  public int[] getHeap() {
-    return heap;
-  }
-
-  public int getHeapSize() {
-    return heap.length - 1;
+    this.array = heap;
+    this.heapSize = this.array.length - 1;
   }
 }
