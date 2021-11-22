@@ -2,14 +2,18 @@ package heap;
 
 import java.util.Arrays;
 
-public class HeapSort {
+public class HeapSortPriorityQueue {
 
   private static int[] array = {0,1,2,3,4,7,8,9,10,14,16};
   private static int heapSize;
 
   public static void main(String[] args) {
     heapSize = array.length - 1;
-    heapSort();
+    buildMaxHeap();
+//    while (heapSize > 0){
+//      System.out.println(heapExtractMax());
+//    }
+    heapIncreaseKey(10,100);
     System.out.println(Arrays.toString(array));
   }
 
@@ -62,6 +66,22 @@ public class HeapSort {
       swap(1,i);
       heapSize--;
       maxHeapify(1);
+    }
+  }
+
+  public static int heapExtractMax(){
+    int max = array[1];
+    array[1] = array[heapSize];
+    heapSize--;
+    maxHeapify(1);
+    return max;
+  }
+
+  public static void heapIncreaseKey(int indexToIncrease,int theValueToBeIncreasedWith){
+    array[indexToIncrease] = theValueToBeIncreasedWith;
+    while (indexToIncrease > 1 && array[parent(indexToIncrease)] < array[indexToIncrease]){
+      swap(indexToIncrease,parent(indexToIncrease));
+      indexToIncrease = parent(indexToIncrease);
     }
   }
 }
