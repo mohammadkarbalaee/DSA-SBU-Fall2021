@@ -20,15 +20,26 @@ public class Median {
         }
         swap(leastIndex,j);
       }
+      System.out.println(findMedian(i,isOdd(i + 1)));
     }
-    boolean isLengthOdd = isOdd(arrayLength);
-    System.out.println(Arrays.toString(array));
   }
 
   private static void swap(int i,int j){
     int temp = array[i];
     array[i] = array[j];
     array[j] = temp;
+  }
+
+  private static double findMedian(int subArrayLength,boolean isLenthOdd){
+    double median = 0;
+    int middleIndex = (subArrayLength + 1) / 2;
+//    System.out.println("middle index: " + middleIndex);
+    if (isLenthOdd){
+      median = array[middleIndex];
+    } else {
+      median = (array[middleIndex] + array[middleIndex - 1]) / 2.0;
+    }
+    return median;
   }
 
   private static boolean isOdd(int arrayLength){
