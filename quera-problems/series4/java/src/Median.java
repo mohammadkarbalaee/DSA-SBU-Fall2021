@@ -11,36 +11,26 @@ public class Median {
     array = new int[arrayLength];
     for (int i = 0; i < arrayLength; i++) {
       array[i] = input.nextInt();
-//      for (int j = 0; j < i; j++) {
-//        int leastIndex = j;
-//        for (int k = j; k < i + 1; k++) {
-//          if (array[k] < array[leastIndex]){
-//            leastIndex = k;
-//          }
-//        }
-//        swap(leastIndex,j);
-//      }
-
       for (int m = 0, j = i; m < j; m++, j--) {
-        int min = array[m], max = array[m];
+        int minValue = array[m];
+        int maxValue = array[m];
         int minimumIndex = m;
         int maximumIndex = m;
         for (int k = m; k <= j; k++) {
-          if (array[k] > max) {
-            max = array[k];
+          if (array[k] > maxValue) {
+            maxValue = array[k];
             maximumIndex = k;
-          } else if (array[k] < min) {
-            min = array[k];
+          } else if (array[k] < minValue) {
+            minValue = array[k];
             minimumIndex = k;
           }
         }
-
         swap(m, minimumIndex);
-
-        if (array[minimumIndex] == max)
+        if (array[minimumIndex] == maxValue){
           swap(j, minimumIndex);
-        else
+        } else {
           swap(j, maximumIndex);
+        }
       }
       System.out.println(findMedian(i,isOdd(i + 1)));
     }
