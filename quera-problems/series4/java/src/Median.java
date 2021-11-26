@@ -3,37 +3,22 @@ import java.util.Scanner;
 
 public class Median {
 
-  private static int[] array;
+//  private static int[] array;
+  private static int[] array = {0, 12,22,3,4,77,80,9,102,14,16};
+  private static int heapSize;
 
   public static void main(String[] args) {
-    Scanner input = new Scanner(System.in);
-    int arrayLength = input.nextInt();
-    array = new int[arrayLength];
-    for (int i = 0; i < arrayLength; i++) {
-      array[i] = input.nextInt();
-      for (int m = 0, j = i; m < j; m++, j--) {
-        int minValue = array[m];
-        int maxValue = array[m];
-        int minimumIndex = m;
-        int maximumIndex = m;
-        for (int k = m; k <= j; k++) {
-          if (array[k] > maxValue) {
-            maxValue = array[k];
-            maximumIndex = k;
-          } else if (array[k] < minValue) {
-            minValue = array[k];
-            minimumIndex = k;
-          }
-        }
-        swap(m, minimumIndex);
-        if (array[minimumIndex] == maxValue){
-          swap(j, minimumIndex);
-        } else {
-          swap(j, maximumIndex);
-        }
-      }
-      System.out.println(findMedian(i,isOdd(i + 1)));
-    }
+//    Scanner input = new Scanner(System.in);
+//    int arrayLength = input.nextInt();
+//    array = new int[arrayLength];
+//    array[0] = 0;
+//    for (int i = 1; i <= arrayLength; i++) {
+//      array[i] = input.nextInt();
+//    }
+    heapSize = array.length - 1;
+    heapSort();
+    System.out.println(Arrays.toString(array));
+//    System.out.println(findMedian(i,isOdd(i + 1)));
   }
 
   private static void swap(int i,int j){
@@ -45,7 +30,6 @@ public class Median {
   private static double findMedian(int subArrayLength,boolean isLenthOdd){
     double median = 0;
     int middleIndex = (subArrayLength + 1) / 2;
-//    System.out.println("middle index: " + middleIndex);
     if (isLenthOdd){
       median = array[middleIndex];
     } else {
@@ -61,4 +45,52 @@ public class Median {
       return true;
     }
   }
+
+  private static void minHeapify(int brokenIndex){
+    int left =left(brokenIndex);
+    int right = right(brokenIndex);
+    int indexOfSmallest = brokenIndex;
+
+    if(left <= heapSize && array[left] < array[indexOfSmallest]){
+      indexOfSmallest = left;
+    }
+
+    if(right <= heapSize && array[right] < array[indexOfSmallest]){
+      indexOfSmallest = right;
+    }
+
+    if (indexOfSmallest != brokenIndex){
+      swap(indexOfSmallest,brokenIndex);
+      minHeapify(indexOfSmallest);
+    }
+  }
+
+  private static int parent(int index){
+    return (int) Math.floor(index / 2.0);
+  }
+
+  private static int left(int index){
+    return 2 * index;
+  }
+
+  private static int right(int index){
+    return  (2 * index) + 1;
+  }
+
+  public static void buildMinHeap(){
+    for (int i = (int) Math.floor((array.length - 1) / 2.0); i > 0; i--) {
+      minHeapify(i);
+    }
+  }
+
+  public static void heapSort(){
+    buildMinHeap();
+    System.out.println(Arrays.toString(array));
+//    for (int i = 2; i < array.length; i++) {
+//      swap(1,i);
+//      heapSize--;
+//      minHeapify(i);
+//    }
+  }
+
 }
