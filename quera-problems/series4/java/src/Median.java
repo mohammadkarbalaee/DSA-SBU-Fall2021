@@ -17,7 +17,6 @@ public class Median {
 //    }
     heapSize = array.length - 1;
     heapSort();
-    System.out.println(Arrays.toString(array));
 //    System.out.println(findMedian(i,isOdd(i + 1)));
   }
 
@@ -85,12 +84,13 @@ public class Median {
 
   public static void heapSort(){
     buildMinHeap();
-    System.out.println(Arrays.toString(array));
-//    for (int i = 2; i < array.length; i++) {
-//      swap(1,i);
-//      heapSize--;
-//      minHeapify(i);
-//    }
+    for (int i = 1; i < array.length; i++) {
+      System.out.println(array[1]);
+      int lastElement = array[heapSize];
+      array[1] = lastElement;
+      heapSize--;
+      minHeapify(1);
+    }
   }
 
 }
