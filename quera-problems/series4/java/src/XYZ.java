@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class XYZ {
@@ -30,11 +29,11 @@ public class XYZ {
     for (int i = 0; i < arrayLength; i++) {
       int numberRepresentation = (cards[i][0] * 10) + cards[i][1];
       switch (numberRepresentation){
-        case 1: System.out.print("X1"); break;
-        case 2: System.out.print("X2"); break;
-        case 3: System.out.print("X3"); break;
-        case 4: System.out.print("X4"); break;
-        case 5: System.out.print("X5"); break;
+        case 0: System.out.print("X1"); break;
+        case 1: System.out.print("X2"); break;
+        case 2: System.out.print("X3"); break;
+        case 3: System.out.print("X4"); break;
+        case 4: System.out.print("X5"); break;
         case 10: System.out.print("Y1"); break;
         case 11: System.out.print("Y2"); break;
         case 12: System.out.print("Y3"); break;
@@ -46,9 +45,7 @@ public class XYZ {
         case 23: System.out.print("Z4"); break;
         case 24: System.out.print("Z5"); break;
       }
-      if (i != arrayLength - 1){
-        System.out.print(" ");
-      }
+      System.out.print(" ");
     }
   }
 
@@ -56,7 +53,6 @@ public class XYZ {
     int[][] outputCards = cards;
     for (int i = 1; i >= 0; i--) {
       outputCards = countingSort(outputCards,i,5);
-      System.out.println(Arrays.deepToString(outputCards));
     }
     return outputCards;
   }
@@ -64,21 +60,16 @@ public class XYZ {
   private static int[][] countingSort(int[][] inputArray,int index,int range){
     int[][] outputArray = new int[inputArray.length][];
     int[] cumulativeFrequency = new int[range];
-    for (int i = 0; i < range; i++) {
-      cumulativeFrequency[i] = 0;
-    }
-    for (int i = 1; i < inputArray.length; i++) {
+    for (int i = 0; i < inputArray.length; i++) {
       cumulativeFrequency[inputArray[i][index]]++;
     }
-    for (int i = 2; i < cumulativeFrequency.length; i++){
+    for (int i = 1; i < cumulativeFrequency.length; i++){
       cumulativeFrequency[i] += cumulativeFrequency[i - 1];
     }
     for (int i = inputArray.length - 1; i >= 0; i--) {
-      outputArray[cumulativeFrequency[inputArray[i][index]]] = inputArray[i];
+      outputArray[cumulativeFrequency[inputArray[i][index]] - 1] = inputArray[i];
       cumulativeFrequency[inputArray[i][index]]--;
     }
     return outputArray;
   }
 }
-
-//some null pointer exceptions are happening here. you can easily fix those tomorrow
