@@ -29,7 +29,7 @@ public class MergeHeap {
 
     buildMinHeap();
 
-    System.out.println(Arrays.toString(minHeapArray));
+
 
     int[] mergedArray = new int[mergedArrayLength];
   }
