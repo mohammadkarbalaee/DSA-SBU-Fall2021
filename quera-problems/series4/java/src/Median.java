@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Median {
 
 //  private static int[] array;
-  private static int[] array = {0, 12,22,3,4,77,80,9,102,14,16};
+  private static int[] array = {0, 12,4,5,3,7,8};
   private static int heapSize;
 
   public static void main(String[] args) {
@@ -16,8 +16,8 @@ public class Median {
 //      array[i] = input.nextInt();
 //    }
     heapSize = array.length - 1;
-    heapSort();
-//    System.out.println(findMedian(i,isOdd(i + 1)));
+    heapSort(array.length);
+
   }
 
   private static void swap(int i,int j){
@@ -26,13 +26,13 @@ public class Median {
     array[j] = temp;
   }
 
-  private static double findMedian(int subArrayLength,boolean isLenthOdd){
+  private static double findMedian(int[] sortedArray,int subArrayLength,boolean isLenthOdd){
     double median = 0;
     int middleIndex = (subArrayLength + 1) / 2;
     if (isLenthOdd){
-      median = array[middleIndex];
+      median = sortedArray[middleIndex];
     } else {
-      median = (array[middleIndex] + array[middleIndex - 1]) / 2.0;
+      median = (sortedArray[middleIndex] + sortedArray[middleIndex - 1]) / 2.0;
     }
     return median;
   }
@@ -82,15 +82,19 @@ public class Median {
     }
   }
 
-  public static void heapSort(){
+  public static void heapSort(int arrayLength){
+    int[] sortedArray = new int[arrayLength];
     buildMinHeap();
     for (int i = 1; i < array.length; i++) {
-      System.out.println(array[1]);
+      sortedArray[i - 1] = array[1];
+      System.out.println(Arrays.toString(sortedArray));
+      System.out.println(findMedian(sortedArray,i - 1,isOdd(i)));
       int lastElement = array[heapSize];
       array[1] = lastElement;
       heapSize--;
       minHeapify(1);
     }
+
   }
 
 }
