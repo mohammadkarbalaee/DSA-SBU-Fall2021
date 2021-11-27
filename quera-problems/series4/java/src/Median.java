@@ -32,7 +32,7 @@ class MinPriorityQueue{
     int leftLeaf = left(indexToMinHeapify);
     int rightLeaf = right(indexToMinHeapify);
     int minimunElementIndex = indexToMinHeapify;
-    if (leftLeaf < array.size() && array.get(leftLeaf) < array.get(indexToMinHeapify)){
+    if (leftLeaf < array.size() && array.get(leftLeaf) < array.get(minimunElementIndex)){
       minimunElementIndex = leftLeaf;
     }
     if (rightLeaf < array.size() && array.get(rightLeaf) < array.get(minimunElementIndex)){
@@ -45,7 +45,7 @@ class MinPriorityQueue{
   }
 
   int parent(int index){
-    return index / 2;
+    return (index - 1) / 2;
   }
 
   void swap(ArrayList<Integer> array, int i, int j) {
@@ -79,10 +79,10 @@ class MaxPriorityQueue{
     int leftLeaf = left(indexToMaxHeapify);
     int rightLeaf = right(indexToMaxHeapify);
     int maximumElementIndex = indexToMaxHeapify;
-    if (leftLeaf < array.size() && array.get(leftLeaf) < array.get(indexToMaxHeapify)){
+    if (leftLeaf < array.size() && array.get(leftLeaf) > array.get(maximumElementIndex)){
       maximumElementIndex = leftLeaf;
     }
-    if (rightLeaf < array.size() && array.get(rightLeaf) < array.get(maximumElementIndex)){
+    if (rightLeaf < array.size() && array.get(rightLeaf) > array.get(maximumElementIndex)){
       maximumElementIndex = rightLeaf;
     }
     if (maximumElementIndex != indexToMaxHeapify) {
@@ -117,7 +117,7 @@ class MaxPriorityQueue{
   }
 
   int parent(int index){
-    return index / 2;
+    return (index - 1) / 2;
   }
 
   void swap(ArrayList<Integer> array, int i, int j) {
@@ -137,12 +137,13 @@ class MaxPriorityQueue{
 
 public class Median {
 
-  private static MinPriorityQueue minHeap = new MinPriorityQueue();
-  private static MaxPriorityQueue maxHeap = new MaxPriorityQueue();
+  private static final MinPriorityQueue minHeap = new MinPriorityQueue();
+  private static final MaxPriorityQueue maxHeap = new MaxPriorityQueue();
 
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
     int arrayLength = input.nextInt();
+
     for (int i = 0; i < arrayLength; i++){
       add(input.nextInt());
       System.out.println(getMedian());
