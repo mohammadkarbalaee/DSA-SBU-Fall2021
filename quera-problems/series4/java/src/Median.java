@@ -3,46 +3,23 @@ import java.util.*;
 class MinPriorityQueue{
 
   ArrayList<Integer> array;
-  int heapSize = 0;
 
   MinPriorityQueue(){
     array = new ArrayList<>();
   }
 
-  void minHeapify(int indexToMinHeapify) {
-    int leftLeaf = left(indexToMinHeapify);
-    int rightLeaf = right(indexToMinHeapify);
-    int minimunElementIndex = indexToMinHeapify;
-    if (leftLeaf < heapSize && array.get(leftLeaf) < array.get(indexToMinHeapify)){
-      minimunElementIndex = leftLeaf;
-    }
-    if (rightLeaf < heapSize && array.get(rightLeaf) < array.get(minimunElementIndex)){
-      minimunElementIndex = rightLeaf;
-    }
-    if (minimunElementIndex != indexToMinHeapify) {
-      swap(array, indexToMinHeapify, minimunElementIndex);
-      minHeapify(minimunElementIndex);
-    }
-  }
-
-  void buildMinHeap(){
-    for (int i = (int) Math.floor((heapSize - 1) / 2.0); i >= 0; i--) {
-      minHeapify(i);
-    }
-  }
-
   int deleteRoot(){
     int rootValue = getRoot();
-    swap(array,0,heapSize - 1);
-    heapSize--;
+    swap(array,0,array.size() - 1);
+    array.remove(array.size() - 1);
+    minHeapify(0);
     return rootValue;
   }
 
   void insertElement(int elementToInsert){
-    heapSize++;
     array.add(elementToInsert);
-    int i = heapSize - 1;
-    while (i > 0 && array.get(parent(i)) < array.get(i)) {
+    int i = array.size() - 1;
+    while (i > 0 && array.get(parent(i)) > array.get(i)) {
       swap(array,i,parent(i));
       i = parent(i);
     }
@@ -51,8 +28,24 @@ class MinPriorityQueue{
     return array.get(0);
   }
 
+  void minHeapify(int indexToMinHeapify) {
+    int leftLeaf = left(indexToMinHeapify);
+    int rightLeaf = right(indexToMinHeapify);
+    int minimunElementIndex = indexToMinHeapify;
+    if (leftLeaf < array.size() && array.get(leftLeaf) < array.get(indexToMinHeapify)){
+      minimunElementIndex = leftLeaf;
+    }
+    if (rightLeaf < array.size() && array.get(rightLeaf) < array.get(minimunElementIndex)){
+      minimunElementIndex = rightLeaf;
+    }
+    if (minimunElementIndex != indexToMinHeapify) {
+      swap(array, indexToMinHeapify, minimunElementIndex);
+      minHeapify(minimunElementIndex);
+    }
+  }
+
   int parent(int index){
-    return (int) Math.floor(index / 2.0);
+    return index / 2;
   }
 
   void swap(ArrayList<Integer> array, int i, int j) {
@@ -70,35 +63,26 @@ class MinPriorityQueue{
   }
 
   int getHeapSize(){
-    return heapSize;
+    return array.size();
   }
 }
 
 class MaxPriorityQueue{
 
   ArrayList<Integer> array;
-  int heapSize = 0;
 
   MaxPriorityQueue(){
     array = new ArrayList<>();
-  }
-
-  int getRoot(){
-    return array.get(0);
-  }
-
-  int getHeapSize(){
-    return heapSize;
   }
 
   void maxHeapify(int indexToMaxHeapify) {
     int leftLeaf = left(indexToMaxHeapify);
     int rightLeaf = right(indexToMaxHeapify);
     int maximumElementIndex = indexToMaxHeapify;
-    if (leftLeaf < heapSize && array.get(leftLeaf) < array.get(indexToMaxHeapify)){
+    if (leftLeaf < array.size() && array.get(leftLeaf) < array.get(indexToMaxHeapify)){
       maximumElementIndex = leftLeaf;
     }
-    if (rightLeaf < heapSize && array.get(rightLeaf) < array.get(maximumElementIndex)){
+    if (rightLeaf < array.size() && array.get(rightLeaf) < array.get(maximumElementIndex)){
       maximumElementIndex = rightLeaf;
     }
     if (maximumElementIndex != indexToMaxHeapify) {
@@ -107,23 +91,25 @@ class MaxPriorityQueue{
     }
   }
 
-  void buildMinHeap(){
-    for (int i = (int) Math.floor((heapSize - 1) / 2.0); i >= 0; i--) {
-      maxHeapify(i);
-    }
+  int getRoot(){
+    return array.get(0);
+  }
+
+  int getHeapSize(){
+    return array.size();
   }
 
   int deleteRoot(){
     int rootValue = getRoot();
-    swap(array,0,heapSize - 1);
-    heapSize--;
+    swap(array,0,array.size() - 1);
+    array.remove(array.size() - 1);
+    maxHeapify(0);
     return rootValue;
   }
 
   void insertElement(int elementToInsert){
-    heapSize++;
     array.add(elementToInsert);
-    int i = heapSize - 1;
+    int i =array.size() - 1;
     while (i > 0 && array.get(parent(i)) < array.get(i)) {
       swap(array,i,parent(i));
       i = parent(i);
@@ -131,7 +117,7 @@ class MaxPriorityQueue{
   }
 
   int parent(int index){
-    return (int) Math.floor(index / 2.0);
+    return index / 2;
   }
 
   void swap(ArrayList<Integer> array, int i, int j) {
@@ -157,7 +143,7 @@ public class Median {
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
     int arrayLength = input.nextInt();
-    for (int i = 0; i < arrayLength; i++) {
+    for (int i = 0; i < arrayLength; i++){
       add(input.nextInt());
       System.out.println(getMedian());
     }
