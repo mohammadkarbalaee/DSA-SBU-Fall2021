@@ -72,15 +72,7 @@ class queue
   }
 
   void insert(int elementToInsert)
-  {
-    heapArray.add(elementToInsert);
-
-    for (int i = heapArray.size() - 1; i > 0 && heapArray.get(parent(i)) > heapArray.get(i); i = parent(i))
-    {
-      swap(heapArray,i,parent(i));
-
-    }
-  }
+  {}
 
   int getRoot()
   {
@@ -126,6 +118,17 @@ class queueMin extends queue
   queueMin()
   {
     super();
+    this.array = new ArrayList<>();
+  }
+  @Override
+  void insert(int elementToInsert)
+  {
+    heapArray.add(elementToInsert);
+
+    for (int i = heapArray.size() - 1; i > 0 && heapArray.get(parent(i)) > heapArray.get(i); i = parent(i))
+    {
+      swap(heapArray,i,parent(i));
+    }
   }
 
   @Override
@@ -160,7 +163,20 @@ class queueMax extends queue{
 
   queueMax(){
     super();
+    this.array = new ArrayList<>();
   }
+
+  @Override
+  void insert(int elementToInsert)
+  {
+    heapArray.add(elementToInsert);
+
+    for (int i = heapArray.size() - 1; i > 0 && heapArray.get(parent(i)) < heapArray.get(i); i = parent(i))
+    {
+      swap(heapArray,i,parent(i));
+    }
+  }
+
   @Override
   void heapify(int i)
   {
