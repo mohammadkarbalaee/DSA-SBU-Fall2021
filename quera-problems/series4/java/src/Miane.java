@@ -112,13 +112,9 @@ class queue
 }
 class queueMin extends queue
 {
-
-  ArrayList<Integer> array;
-
   queueMin()
   {
     super();
-    this.array = new ArrayList<>();
   }
   @Override
   void insert(int elementToInsert)
@@ -159,11 +155,8 @@ class queueMin extends queue
 
 class queueMax extends queue{
 
-  ArrayList<Integer> array;
-
   queueMax(){
     super();
-    this.array = new ArrayList<>();
   }
 
   @Override
@@ -183,17 +176,17 @@ class queueMax extends queue{
     int left = left(i);
     int right = right(i);
     int maxx = i;
-    if (left < array.size() && array.get(left) > array.get(maxx))
+    if (left < heapArray.size() && heapArray.get(left) > heapArray.get(maxx))
     {
       maxx = left;
     }
-    if (right < array.size() && array.get(right) > array.get(maxx))
+    if (right < heapArray.size() && heapArray.get(right) > heapArray.get(maxx))
     {
       maxx = right;
     }
     if (maxx != i)
     {
-      swap(array, i, maxx);
+      swap(heapArray, i, maxx);
       heapify(maxx);
     }
 
