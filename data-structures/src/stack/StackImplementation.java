@@ -4,10 +4,10 @@ import java.util.NoSuchElementException;
 
 public class StackImplementation {
   public static void main(String[] args) {
-    Stack<Integer> myStack = new Stack<>(10);
-    myStack.push(25);
-    myStack.push(50);
-    System.out.println(myStack.pop());
+    Stack<Integer> ourStack = new Stack<>(10);
+    ourStack.push(25);
+    ourStack.push(50);
+    System.out.println(ourStack.pop());
   }
 }
 
