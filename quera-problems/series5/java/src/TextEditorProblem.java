@@ -32,7 +32,7 @@ class TextEditor{
           this.cursor++;
         }
       } else if (newCharacter.equals('<')){
-        if (this.cursor > 0){
+        if (this.cursor > -1){
           this.cursor--;
         }
       }
