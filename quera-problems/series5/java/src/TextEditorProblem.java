@@ -1,87 +1,81 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 public class TextEditorProblem {
-  public static void main(String[] args) {
-//    Scanner input = new Scanner(System.in);
-//    String text = input.next();
-//    TextEditor textEditor = new TextEditor();
-//    for (int i = 0; i < text.length(); i++) {
-//      textEditor.getNewCharacter(text.charAt(i));
-//    }
-//    System.out.println(textEditor.getEditedString());
-    LinkedList<Character> myList = new LinkedList<>();
-//    myList.insertAt(new Node<>(null,'a',null));
-//    myList.insertAt(new Node<>(null,'b',null));
-//    myList.insertAt(new Node<>(null,'c',null));
-//    myList.insertAt(new Node<>(null,'d',null));
-//    System.out.println(myList.getNodeAt(0).data);
-    myList.add(0,'a');
-    myList.add(0,'b');
-    myList.add(1,'c');
-    myList.remove(1);
-    System.out.println(myList.get(0).data);
-    System.out.println(myList.get(1).data);
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer input = new StringTokenizer(br.readLine());
+    String text = input.nextToken();
+    TextEditor textEditor = new TextEditor();
+    for (int i = 0; i < text.length(); i++) {
+      textEditor.getNewCharacter(text.charAt(i));
+    }
+    System.out.println(textEditor.getEditedString());
   }
 }
 
-//class TextEditor{
-//
-//  private LinkedList<Character> editedText;
-//  private int cursor;
-//
-//  public TextEditor(){
-//    this.editedText = new LinkedList<>();
-//    this.cursor = -1;
-//  }
-//
-//  public void getNewCharacter(Character newCharacter){
-//    if (isCommand(newCharacter)){
-//      if (newCharacter.equals('-')){
-//        deleteCharAtCursor();
-//      } else if(newCharacter.equals('>')){
-//        if (this.cursor < (this.editedText.size() - 1)){
-//          this.cursor++;
-//        }
-//      } else if (newCharacter.equals('<')){
-//        if (this.cursor > -1){
-//          this.cursor--;
-//        }
-//      }
-//    } else {
-//      this.cursor++;
-//      insertNewCharacter(newCharacter);
-//    }
-//  }
-//
-//  private void deleteCharAtCursor() {
-//    if (this.cursor != -1){
-//      this.editedText.remove(this.cursor);
-//      this.cursor--;
-//    }
-//  }
-//
-//  private boolean isCommand(Character newCharacter){
-//    if (newCharacter.equals('-')  || newCharacter.equals('>') || newCharacter.equals('<')){
-//      return true;
-//    } else {
-//      return false;
-//    }
-//  }
-//
-//  private void insertNewCharacter(char newCharacter){
-//    this.editedText.add(this.cursor,newCharacter);
-//  }
-//
-//  public String getEditedString(){
-//    StringBuilder finalString = new StringBuilder();
-//    for (int i = 0; i < this.editedText.size(); i++) {
-//      finalString.append(this.editedText.get(i));
-//    }
-//    if (finalString.toString().isEmpty()){
-//      return "-1";
-//    } else {
-//      return finalString.toString();
-//    }
-//  }
-//}
+class TextEditor{
+
+  private final LinkedList<Character> editedText;
+  private int cursor;
+
+  public TextEditor(){
+    this.editedText = new LinkedList<>();
+    this.cursor = -1;
+  }
+
+  public void getNewCharacter(Character newCharacter){
+    if (isCommand(newCharacter)){
+      if (newCharacter.equals('-')){
+        deleteCharAtCursor();
+      } else if(newCharacter.equals('>')){
+        if (this.cursor < (this.editedText.size() - 1)){
+          this.cursor++;
+        }
+      } else if (newCharacter.equals('<')){
+        if (this.cursor > -1){
+          this.cursor--;
+        }
+      }
+    } else {
+      this.cursor++;
+      insertNewCharacter(newCharacter);
+    }
+  }
+
+  private void deleteCharAtCursor() {
+    if (this.cursor != -1){
+      this.editedText.remove(this.cursor);
+      this.cursor--;
+    }
+  }
+
+  private boolean isCommand(Character newCharacter){
+    if (newCharacter.equals('-')  || newCharacter.equals('>') || newCharacter.equals('<')){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private void insertNewCharacter(char newCharacter){
+    this.editedText.add(this.cursor,newCharacter);
+  }
+
+  public String getEditedString(){
+    StringBuilder finalString = new StringBuilder();
+    for (int i = 0; i < this.editedText.size(); i++) {
+      finalString.append(this.editedText.get(i).data);
+    }
+    if (finalString.toString().isEmpty()){
+      return "-1";
+    } else {
+      return finalString.toString();
+    }
+  }
+}
 
 
 
@@ -112,14 +106,16 @@ class LinkedList<T>{
   }
 
   public void add(int indexToInsertAt,T newData){
-    Node<T> currentNode = this.get(indexToInsertAt);
+    Node<T> currentNode;
     Node<T> newNode = new Node<>(null,newData,null);
-    if (currentNode != null){
-      if (currentNode.previousNode != null){
-        newNode.nextNode = currentNode;
-        newNode.previousNode = currentNode.previousNode;
-        currentNode.previousNode.nextNode = newNode;
-        currentNode.previousNode = newNode;
+    if (indexToInsertAt == this.length && indexToInsertAt != 0) {
+      currentNode = this.get(indexToInsertAt - 1);
+      newNode.nextNode = null;
+      newNode.previousNode = currentNode;
+      currentNode.nextNode = newNode;
+    } else if(indexToInsertAt == 0) {
+      if (this.headNode == null){
+        this.headNode = newNode;
       } else {
         newNode.nextNode = this.headNode;
         this.headNode.previousNode = newNode;
@@ -127,7 +123,15 @@ class LinkedList<T>{
         this.headNode = newNode;
       }
     } else {
-      this.headNode = newNode;
+      currentNode = this.get(indexToInsertAt);
+      if (currentNode != null){
+        if (currentNode.previousNode != null) {
+          newNode.nextNode = currentNode;
+          newNode.previousNode = currentNode.previousNode;
+          currentNode.previousNode.nextNode = newNode;
+          currentNode.previousNode = newNode;
+        }
+      }
     }
     this.length++;
   }
@@ -154,7 +158,7 @@ class LinkedList<T>{
     this.length--;
   }
 
-  int length(){
+  int size(){
     return this.length;
   }
 }
