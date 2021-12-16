@@ -16,9 +16,9 @@ public class TextEditorProblem {
     myList.add(0,'a');
     myList.add(0,'b');
     myList.add(1,'c');
+    myList.remove(1);
     System.out.println(myList.get(0).data);
     System.out.println(myList.get(1).data);
-    System.out.println(myList.get(2).data);
   }
 }
 
@@ -133,11 +133,28 @@ class LinkedList<T>{
   }
 
   public void remove(int indexToRemove){
-
+    Node<T> currentNode = this.get(indexToRemove);
+    if (currentNode != null){
+      if (currentNode.previousNode != null){
+        if (currentNode.nextNode != null){
+          currentNode.previousNode.nextNode = currentNode.nextNode;
+          currentNode.nextNode.previousNode = currentNode.previousNode;
+        } else {
+          currentNode.previousNode.nextNode = null;
+        }
+      } else {
+        if (this.headNode.nextNode != null){
+          this.headNode.nextNode.previousNode = null;
+          this.headNode = this.headNode.nextNode;
+        } else {
+          this.headNode = null;
+        }
+      }
+    }
+    this.length--;
   }
 
   int length(){
     return this.length;
   }
-
 }
