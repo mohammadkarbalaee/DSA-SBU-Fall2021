@@ -53,11 +53,7 @@ class TextEditor{
   }
 
   private boolean isCommand(Character newCharacter){
-    if (newCharacter.equals('-')  || newCharacter.equals('>') || newCharacter.equals('<')){
-      return true;
-    } else {
-      return false;
-    }
+    return newCharacter.equals('-') || newCharacter.equals('>') || newCharacter.equals('<');
   }
 
   private void insertNewCharacter(char newCharacter){
@@ -67,7 +63,7 @@ class TextEditor{
   public String getEditedString(){
     StringBuilder finalString = new StringBuilder();
     for (int i = 0; i < this.editedText.size(); i++) {
-      finalString.append(this.editedText.get(i).data);
+      finalString.append(this.editedText.get(i).getData());
     }
     if (finalString.toString().isEmpty()){
       return "-1";
@@ -77,30 +73,65 @@ class TextEditor{
   }
 }
 
-
-
 class Node<T>{
-  public T data;
-  public Node<T> previousNode;
-  public Node<T> nextNode;
+  private T data;
+  private Node<T> previousNode;
+  private Node<T> nextNode;
 
   Node(Node<T> previousNode,T data,Node<T> nextNode){
     this.previousNode = previousNode;
     this.data = data;
     this.nextNode = nextNode;
   }
+
+  public T getData() {
+    return data;
+  }
+
+  public void setData(T data) {
+    this.data = data;
+  }
+
+  public Node<T> getPreviousNode() {
+    return previousNode;
+  }
+
+  public void setPreviousNode(Node<T> previousNode) {
+    this.previousNode = previousNode;
+  }
+
+  public Node<T> getNextNode() {
+    return nextNode;
+  }
+
+  public void setNextNode(Node<T> nextNode) {
+    this.nextNode = nextNode;
+  }
 }
 
 class LinkedList<T>{
-  public Node<T> headNode = null;
+  private Node<T> headNode = null;
+  private Node<T> tailNode = null;
   private int length = 0;
 
   public Node<T> get(int wantedNodeIndex){
-    Node<T> wantedNode = this.headNode;
-    int currentIndex = 0;
-    while (wantedNode != null && wantedNodeIndex != currentIndex){
-      wantedNode = wantedNode.nextNode;
-      currentIndex++;
+    int middle = this.length / 2;
+    Node<T> wantedNode;
+
+    if (wantedNodeIndex > middle){
+      wantedNode = this.tailNode;
+      int currentIndex = this.length - 1;
+      while (wantedNode != null && wantedNodeIndex != currentIndex){
+        wantedNode = wantedNode.getPreviousNode();
+        currentIndex--;
+      }
+    } else {
+      wantedNode = this.headNode;
+      int currentIndex = 0;
+      while (wantedNode != null && wantedNodeIndex != currentIndex){
+        wantedNode = wantedNode.getNextNode();
+        currentIndex++;
+      }
     }
     return wantedNode;
   }
@@ -109,27 +140,28 @@ class LinkedList<T>{
     Node<T> currentNode;
     Node<T> newNode = new Node<>(null,newData,null);
     if (indexToInsertAt == this.length && indexToInsertAt != 0) {
-      currentNode = this.get(indexToInsertAt - 1);
-      newNode.nextNode = null;
-      newNode.previousNode = currentNode;
-      currentNode.nextNode = newNode;
+      newNode.setNextNode(null);
+      newNode.setPreviousNode(this.tailNode);
+      this.tailNode.setNextNode(newNode);
+      this.tailNode = newNode;
     } else if(indexToInsertAt == 0) {
       if (this.headNode == null){
         this.headNode = newNode;
+        this.tailNode = this.headNode;
       } else {
-        newNode.nextNode = this.headNode;
-        this.headNode.previousNode = newNode;
-        newNode.previousNode = null;
+        newNode.setNextNode(this.headNode);
+        this.headNode.setPreviousNode(newNode);
+        newNode.setPreviousNode(null);
         this.headNode = newNode;
       }
     } else {
       currentNode = this.get(indexToInsertAt);
       if (currentNode != null){
-        if (currentNode.previousNode != null) {
-          newNode.nextNode = currentNode;
-          newNode.previousNode = currentNode.previousNode;
-          currentNode.previousNode.nextNode = newNode;
-          currentNode.previousNode = newNode;
+        if (currentNode.getPreviousNode() != null) {
+          newNode.setNextNode(currentNode);
+          newNode.setPreviousNode(currentNode.getPreviousNode());
+          currentNode.getPreviousNode().setNextNode(newNode);
+          currentNode.setPreviousNode(newNode);
         }
       }
     }
@@ -137,19 +169,28 @@ class LinkedList<T>{
   }
 
   public void remove(int indexToRemove){
+    if (indexToRemove == this.length - 1) {
+      if (this.headNode == this.tailNode) {
+        this.headNode = null;
+        this.tailNode = null;
+      } else {
+        this.tailNode.getPreviousNode().setNextNode(null);
+        this.tailNode = this.tailNode.getPreviousNode();
+      }
+      this.length--;
+      return;
+    }
     Node<T> currentNode = this.get(indexToRemove);
     if (currentNode != null){
-      if (currentNode.previousNode != null){
-        if (currentNode.nextNode != null){
-          currentNode.previousNode.nextNode = currentNode.nextNode;
-          currentNode.nextNode.previousNode = currentNode.previousNode;
-        } else {
-          currentNode.previousNode.nextNode = null;
+      if (currentNode.getPreviousNode() != null){
+        if (currentNode.getNextNode() != null){
+          currentNode.getPreviousNode().setNextNode(currentNode.getNextNode());
+          currentNode.getNextNode().setPreviousNode(currentNode.getPreviousNode());
         }
       } else {
-        if (this.headNode.nextNode != null){
-          this.headNode.nextNode.previousNode = null;
-          this.headNode = this.headNode.nextNode;
+        if (this.headNode.getNextNode() != null){
+          this.headNode.getNextNode().setPreviousNode(null);
+          this.headNode = this.headNode.getNextNode();
         } else {
           this.headNode = null;
         }
