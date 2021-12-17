@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MaxSumImplementation {
+class MaxSumImplementation{
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
     int n = input.nextInt();
@@ -9,26 +9,19 @@ public class MaxSumImplementation {
     for (int i = 0; i < n; i++) {
       array[i] = input.nextInt();
     }
-    long maximumSum = 0;
-    for (int i = 1; i <= m; i++) {
-      long sum = 0;
-      int stackHead = 0;
-      int stackTail = n - 1;
+    int stackSum = 0;
+    int tailSum ;
+    for(int i=0; i<m; i++) {
+      stackSum += array[i];
+    }
+    tailSum = stackSum;
+    for(int i=0 ; i<m-1; i++) {
+      stackSum = stackSum + array[n - 1 - i] - array[m - 1 - i];
 
-      for (int j = 0; j < i; j++) {
-        sum += array[stackHead];
-        stackHead++;
-      }
-
-      for (int j = 0; j < m - i; j++) {
-        sum += array[stackTail];
-        stackTail--;
-      }
-
-      if (sum > maximumSum){
-        maximumSum = sum;
+      if(stackSum >= tailSum){
+        tailSum = stackSum;
       }
     }
-    System.out.println(maximumSum);
+    System.out.println(tailSum);
   }
 }
