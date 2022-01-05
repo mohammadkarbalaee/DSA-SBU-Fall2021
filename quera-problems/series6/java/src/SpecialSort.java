@@ -19,6 +19,8 @@ public class SpecialSort {
     for (int i = 0; i < firstArray.length; i++) {
       System.out.print(firstArray[i] + " ");
     }
+    Integer[] things = new Integer[10];
+    things[0] = null;
   }
 
   private static void specialSort(int[] firstArray, int[] secondArray) {
