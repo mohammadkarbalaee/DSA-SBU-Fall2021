@@ -18,17 +18,25 @@ public class Details {
 
     long sums = 0;
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i < n; i++) {
       int value = numbers[i];
-      if (startOfRange < value && value < endOfRange) {
+      if (startOfRange <= value && value <= endOfRange) {
         BinarySearchNode<Integer> tempNode = myBST.treeSearch(myBST.getRootNode(), value);
-        System.out.println(tempNode.toString());
-        System.out.print(tempNode.getData() + ":  ");
+        System.out.println(tempNode.getData());
+        //        System.out.println(tempNode.toString());
+        //        System.out.print(tempNode.getData() + ":  ");
         myBST.inorderTreeWalk(tempNode,true);
         ArrayList<Integer> temp = myBST.getInorderWalkResult();
-        System.out.println(temp);
-        sums += temp.size() - 1;
+        //        System.out.println(temp);
+        sums++;
+        for (int j = 0; j < temp.size(); j++) {
+          if (startOfRange > temp.get(j) || temp.get(j) > endOfRange) {
+            sums--;
+            break;
+          }
+        }
       }
+//      System.out.println(myBST.treeSearch(myBST.getRootNode(), value).toString());
     }
 
     System.out.println(sums);
