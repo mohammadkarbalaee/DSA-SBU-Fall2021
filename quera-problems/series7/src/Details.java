@@ -16,30 +16,26 @@ public class Details {
     int startOfRange = input.nextInt();
     int endOfRange = input.nextInt();
 
-    long sums = 0;
+    long count = 0;
 
     for (int i = 0; i < n; i++) {
       int value = numbers[i];
       if (startOfRange <= value && value <= endOfRange) {
-        BinarySearchNode<Integer> tempNode = myBST.treeSearch(myBST.getRootNode(), value);
-        System.out.println(tempNode.getData());
-        //        System.out.println(tempNode.toString());
-        //        System.out.print(tempNode.getData() + ":  ");
-        myBST.inorderTreeWalk(tempNode,true);
-        ArrayList<Integer> temp = myBST.getInorderWalkResult();
-        //        System.out.println(temp);
-        sums++;
-        for (int j = 0; j < temp.size(); j++) {
-          if (startOfRange > temp.get(j) || temp.get(j) > endOfRange) {
-            sums--;
+        myBST.inorderTreeWalk(myBST.treeSearch(myBST.getRootNode(), value),true);
+        ArrayList<Integer> walkResult = myBST.getInorderWalkResult();
+        boolean shouldAdd = true;
+        for (int j = 0; j < walkResult.size(); j++) {
+          if (startOfRange > walkResult.get(j) || walkResult.get(j) > endOfRange) {
+            shouldAdd = false;
             break;
           }
         }
+        if (shouldAdd) {
+          count++;
+        }
       }
-//      System.out.println(myBST.treeSearch(myBST.getRootNode(), value).toString());
     }
-
-    System.out.println(sums);
+    System.out.println(count);
   }
 }
 
