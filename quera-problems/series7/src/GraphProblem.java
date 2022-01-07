@@ -22,7 +22,7 @@ public class GraphProblem {
       edgesData.add(tuple);
     }
     for (Integer vertex : vertices) {
-      myGraph.addVertex(vertex);
+      myGraph.addVertex(vertex - 1);
     }
     for (ArrayList<Integer> tuple : edgesData) {
       myGraph.addEdge(tuple.get(0) - 1,tuple.get(1) - 1);
@@ -31,11 +31,15 @@ public class GraphProblem {
     System.out.println(myGraph.calculateLongestPath());
   }
 }
-
+enum VertexState {
+  WHITE,
+  BLACK,
+  GRAY
+}
 
 class Vertex<T>{
   public int label;
-  public boolean isVisited = false;
+  public VertexState state = VertexState.WHITE;
   public ArrayList<Vertex<T>> neighbors;
 
   public Vertex(int label) {
@@ -82,10 +86,14 @@ class Graph<T> {
   public int calculateLongestPath () {
     this.longestPathLength = 0;
     for (int i = 0; i < this.n; i++) {
-      this.vertices.get(i).isVisited = false;
+      this.vertices.get(i).state = VertexState.WHITE;
     }
     for (Vertex<T> vertex: this.vertices) {
-      if (!vertex.isVisited) {
+      //      System.out.println(vertex.label + ":  ");
+      //      for (int i = 0; i < vertex.neighbors.size(); i++) {
+      //        System.out.println(vertex.neighbors.get(i).label);
+      //      }
+      if (vertex.state == VertexState.WHITE) {
         visit(vertex);
       }
     }
@@ -96,12 +104,15 @@ class Graph<T> {
   }
 
   public void visit(Vertex<T> vertex){
-    vertex.isVisited = true;
+    vertex.state = VertexState.GRAY;
     for (int i = 0; i < vertex.neighbors.size(); i++) {
-      if (!vertex.neighbors.get(i).isVisited) {
+      if (vertex.neighbors.get(i).state == VertexState.WHITE) {
         visit(vertex.neighbors.get(i));
       }
-      this.dp[vertex.label] = Math.max(this.dp[vertex.label],1 + this.dp[vertex.neighbors.get(i).label]);
+      if (vertex.neighbors.get(i).state == VertexState.BLACK) {
+        this.dp[vertex.label] = Math.max(this.dp[vertex.label],1 + this.dp[vertex.neighbors.get(i).label]);
+      }
     }
+    vertex.state = VertexState.BLACK;
   }
 }
